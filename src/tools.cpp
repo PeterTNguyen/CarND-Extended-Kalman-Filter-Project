@@ -52,30 +52,30 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
   /**
     * Calculate a Jacobian here.
   */
-    MatrixXd Hj(3,4);
+  MatrixXd Hj(3,4);
 	//recover state parameters
 	float px = x_state(0);
 	float py = x_state(1);
 	float vx = x_state(2);
 	float vy = x_state(3);
 
-    float px2py2 = px*px + py*py;
+  float px2py2 = px*px + py*py;
 
 	//check division by zero
 	if(px2py2 == 0.0)
 	{
-	    cout << "Error" << endl;
+	  cout << "Error" << endl;
 	}
 	else
 	//compute the Jacobian matrix
-    {
-        float sqrtpx2py2 = sqrt(px2py2);
-        float px2py2_32 = pow(px2py2, 1.5);
-        Hj << px/sqrtpx2py2 , py/sqrtpx2py2, 0.0, 0.0,
-              -py/px2py2, px/px2py2, 0.0, 0.0,
-              py*(vx*py - vy*px)/px2py2_32,
-              px*(vy*px - vx*py)/px2py2_32,
-              px/sqrtpx2py2, py/sqrtpx2py2;
-    }
+  {
+    float sqrtpx2py2 = sqrt(px2py2);
+    float px2py2_32 = pow(px2py2, 1.5);
+    Hj << px/sqrtpx2py2 , py/sqrtpx2py2, 0.0, 0.0,
+          -py/px2py2, px/px2py2, 0.0, 0.0,
+          py*(vx*py - vy*px)/px2py2_32,
+          px*(vy*px - vx*py)/px2py2_32,
+          px/sqrtpx2py2, py/sqrtpx2py2;
+  }
 	return Hj;
 }
